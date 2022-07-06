@@ -16,13 +16,7 @@ import { CreateSessionDTO, DecodedToken } from "./types";
 const app = express();
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: true,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-    credentials: true,
-  })
-);
+app.use(cors());
 
 seedUserStore();
 
