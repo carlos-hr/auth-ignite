@@ -16,7 +16,13 @@ import { CreateSessionDTO, DecodedToken } from "./types";
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(
+  cors({
+    origin: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    credentials: true,
+  })
+);
 
 seedUserStore();
 
@@ -28,25 +34,21 @@ function checkAuthMiddleware(
   const { authorization } = request.headers;
 
   if (!authorization) {
-    return response
-      .status(401)
-      .json({
-        error: true,
-        code: "token.invalid",
-        message: "Token not present.",
-      });
+    return response.status(401).json({
+      error: true,
+      code: "token.invalid",
+      message: "Token not present.",
+    });
   }
 
   const [, token] = authorization?.split(" ");
 
   if (!token) {
-    return response
-      .status(401)
-      .json({
-        error: true,
-        code: "token.invalid",
-        message: "Token not present.",
-      });
+    return response.status(401).json({
+      error: true,
+      code: "token.invalid",
+      message: "Token not present.",
+    });
   }
 
   try {
@@ -70,25 +72,21 @@ function addUserInformationToRequest(
   const { authorization } = request.headers;
 
   if (!authorization) {
-    return response
-      .status(401)
-      .json({
-        error: true,
-        code: "token.invalid",
-        message: "Token not present.",
-      });
+    return response.status(401).json({
+      error: true,
+      code: "token.invalid",
+      message: "Token not present.",
+    });
   }
 
   const [, token] = authorization?.split(" ");
 
   if (!token) {
-    return response
-      .status(401)
-      .json({
-        error: true,
-        code: "token.invalid",
-        message: "Token not present.",
-      });
+    return response.status(401).json({
+      error: true,
+      code: "token.invalid",
+      message: "Token not present.",
+    });
   }
 
   try {
@@ -98,13 +96,11 @@ function addUserInformationToRequest(
 
     return next();
   } catch (err) {
-    return response
-      .status(401)
-      .json({
-        error: true,
-        code: "token.invalid",
-        message: "Invalid token format.",
-      });
+    return response.status(401).json({
+      error: true,
+      code: "token.invalid",
+      message: "Invalid token format.",
+    });
   }
 }
 
